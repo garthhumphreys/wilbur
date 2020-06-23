@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My first Vue app</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <style>
+    body {
+      background-color: #eee;
+    }
+
+    #myCanvas {
+      border: 1px solid #000;
+    }
+  </style>
+  <body>
+    <div id="app">
+      {{ message }}
+      <canvas id="myCanvas" ref="myCanvas" width="600" height="400"></canvas>
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          message: "Hello Vue!",
+          myCanvas: {
+            context: null
+          }
+        },
+        mounted: function() {
+          this.setup();
+          this.$nextTick(function() {
+            setInterval(() => {
+              //this.updateAll();
+            }, 1000 / 30);
+          });
+        },
+        methods: {
+          setup: function() {
+            this.myCanvas.context = this.$refs["myCanvas"].getContext("2d");
+            this.draw();
+          },
+          draw: function() {
+            ctx = this.myCanvas.context;
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, 200, 20);
+            ctx.fill();
+          },
+          updateAll: function() {
+            console.log("test");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
